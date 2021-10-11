@@ -9,10 +9,19 @@ function getJokes(e) {
   xhr.onload = function () {
     if (this.status === 200) {
       const res = JSON.parse(this.responseText);
-      console.log(res);
+      
+      let output = '';
+      if (res.type === 'success') {
+        res.value.forEach(joke => {
+          output += `<li>${joke.joke}</li>`;
+        });
+      }
+      else {
+        output+='<h3>Ooops! The internet broke</h3>'
+      }
+      document.querySelector('.jokes').innerHTML = output;
     }
   }
-
   xhr.send();
 
 
